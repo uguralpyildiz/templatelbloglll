@@ -1,0 +1,617 @@
+<!doctype html>
+<html lang="tr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>blog</title>
+    <style>
+        :root {
+            --bg: #0b0d10;
+            --card: #12161c;
+            --text: #e7edf5;
+            --muted: #9aa7b6;
+            --line: #222a34;
+            --btn: #1e2631;
+            --btn2: #2a3544
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+            background: var(--bg);
+            color: var(--text)
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+
+        .wrap {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 24px
+        }
+
+        .top {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px
+        }
+
+        .brand {
+            display: flex;
+            gap: 10px;
+            align-items: center
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 999px;
+            background: #7c3aed;
+            box-shadow: 0 0 30px #7c3aed55
+        }
+
+        .nav {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap
+        }
+
+        .btn {
+            border: 1px solid var(--line);
+            background: var(--btn);
+            color: var(--text);
+            padding: 10px 12px;
+            border-radius: 12px;
+            cursor: pointer
+        }
+
+        .btn:hover {
+            background: var(--btn2)
+        }
+
+        .hero {
+            border: 1px solid var(--line);
+            background: linear-gradient(180deg, #12161c, #0b0d10);
+            border-radius: 18px;
+            padding: 18px;
+            margin-bottom: 16px
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 12px
+        }
+
+        .card {
+            grid-column: span 12;
+            border: 1px solid var(--line);
+            background: var(--card);
+            border-radius: 16px;
+            padding: 14px
+        }
+
+        @media(min-width:760px) {
+            .card.half {
+                grid-column: span 6
+            }
+        }
+
+        .h1 {
+            font-size: 22px;
+            font-weight: 800;
+            margin: 0 0 6px
+        }
+
+        .p {
+            margin: 0;
+            color: var(--muted);
+            line-height: 1.6
+        }
+
+        .list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px
+        }
+
+        .item {
+            border: 1px solid var(--line);
+            background: #0f1318;
+            border-radius: 14px;
+            padding: 12px
+        }
+
+        .item:hover {
+            background: #111823
+        }
+
+        .title {
+            font-weight: 800;
+            margin: 0 0 6px
+        }
+
+        .meta {
+            font-size: 12px;
+            color: var(--muted)
+        }
+
+        .chip {
+            display: inline-block;
+            font-size: 12px;
+            color: var(--muted);
+            border: 1px solid var(--line);
+            padding: 4px 8px;
+            border-radius: 999px;
+            margin-top: 10px
+        }
+
+        .hr {
+            height: 1px;
+            background: var(--line);
+            margin: 14px 0
+        }
+
+        .input,
+        textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 1px solid var(--line);
+            background: #0c1015;
+            color: var(--text);
+            outline: none
+        }
+
+        textarea {
+            min-height: 180px;
+            resize: vertical;
+            line-height: 1.6
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            color: var(--muted);
+            margin: 10px 0 6px
+        }
+
+        .row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap
+        }
+
+        .row>* {
+            flex: 1 1 220px
+        }
+
+        .modalBack {
+            position: fixed;
+            inset: 0;
+            background: #00000088;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 18px
+        }
+
+        .modal {
+            max-width: 820px;
+            width: 100%;
+            border: 1px solid var(--line);
+            background: var(--card);
+            border-radius: 18px;
+            padding: 14px
+        }
+
+        .modalTop {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px
+        }
+
+        .warn {
+            color: #ffcc66
+        }
+
+        .ok {
+            color: #86efac
+        }
+
+        .err {
+            color: #fca5a5
+        }
+
+        .small {
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.5
+        }
+
+        pre {
+            white-space: pre-wrap;
+            word-break: break-word;
+            background: #0c1015;
+            border: 1px solid var(--line);
+            padding: 12px;
+            border-radius: 14px;
+            line-height: 1.7;
+            margin: 12px 0 0
+        }
+
+        .loading {
+            opacity: .75
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="top">
+            <div class="brand">
+                <div class="dot"></div>
+                <div>
+                    <div style="font-weight:900;letter-spacing:.3px">github pages blog</div>
+                    <div class="small">tek dosya index html issues cms</div>
+                </div>
+            </div>
+            <div class="nav">
+                <button class="btn" id="goHome">anasayfa</button>
+                <button class="btn" id="goBlogs">bloglar</button>
+                <button class="btn" id="openModal">blog ekle</button>
+            </div>
+        </div>
+
+        <div class="hero">
+            <div class="h1" id="pageTitle">anasayfa</div>
+            <div class="p" id="pageDesc">son yazilar burada doner bloglar sekmesinde hepsi var</div>
+            <div class="chip" id="repoChip"></div>
+        </div>
+
+        <div id="content" class="grid"></div>
+    </div>
+
+    <div class="modalBack" id="modalBack">
+        <div class="modal">
+            <div class="modalTop">
+                <div style="font-weight:900">blog ekle</div>
+                <button class="btn" id="closeModal">kapat</button>
+            </div>
+
+            <div class="small" style="margin-top:8px">
+                <span class="warn">not</span> github pages static oldugu icin json dosyasina yazamazsin
+                burada yayinla butonu repo icine <b>issue</b> aciyor
+                tokeni sadece sen admin olarak gir
+            </div>
+
+            <div class="row" style="margin-top:10px">
+                <div>
+                    <label>title</label>
+                    <input class="input" id="inTitle" placeholder="ornek yeni kampanya stratejisi" />
+                </div>
+                <div>
+                    <label>header</label>
+                    <input class="input" id="inHeader" placeholder="ornek bu yazida ne anlatiyorum" />
+                </div>
+            </div>
+
+            <label>blog metni</label>
+            <textarea id="inBody" placeholder="metin buraya"></textarea>
+
+            <div class="row">
+                <div>
+                    <label>github token</label>
+                    <input class="input" id="inToken" type="password"
+                        placeholder="fine grained token issues read write" />
+                    <div class="small">tokeni tarayicida tutma istersen yayinladiktan sonra sil gec</div>
+                </div>
+                <div>
+                    <label>etiket</label>
+                    <input class="input" id="inLabel" placeholder="blog" value="blog" />
+                    <div class="small">listeleme bu etikete gore yapiliyor</div>
+                </div>
+            </div>
+
+            <div class="hr"></div>
+
+            <div class="row">
+                <button class="btn" id="publishBtn">yayinla</button>
+                <button class="btn" id="saveTokenBtn">tokeni kaydet</button>
+                <button class="btn" id="clearTokenBtn">tokeni sil</button>
+            </div>
+
+            <div class="small" id="status"></div>
+        </div>
+    </div>
+
+    <script>
+        // ====== ayar burasi ======
+        const OWNER = "KULLANICI_ADIN"
+        const REPO = "REPO_ADIN"
+        const DEFAULT_LABEL = "blog"
+        // =========================
+
+        const apiBase = `https://api.github.com/repos/${OWNER}/${REPO}`
+        const els = {
+            content: document.getElementById("content"),
+            pageTitle: document.getElementById("pageTitle"),
+            pageDesc: document.getElementById("pageDesc"),
+            repoChip: document.getElementById("repoChip"),
+            modalBack: document.getElementById("modalBack"),
+            status: document.getElementById("status"),
+            inTitle: document.getElementById("inTitle"),
+            inHeader: document.getElementById("inHeader"),
+            inBody: document.getElementById("inBody"),
+            inToken: document.getElementById("inToken"),
+            inLabel: document.getElementById("inLabel"),
+        }
+
+        els.repoChip.textContent = `${OWNER}/${REPO}`
+
+        // nav
+        document.getElementById("goHome").onclick = () => location.hash = "#/"
+        document.getElementById("goBlogs").onclick = () => location.hash = "#/blogs"
+        document.getElementById("openModal").onclick = () => openModal()
+        document.getElementById("closeModal").onclick = () => closeModal()
+
+        // token helpers
+        const tokenKey = `gh_token_${OWNER}_${REPO}`
+        const saved = localStorage.getItem(tokenKey)
+        if (saved) els.inToken.value = saved
+
+        document.getElementById("saveTokenBtn").onclick = () => {
+            if (!els.inToken.value.trim()) return setStatus("token bos kanka", "err")
+            localStorage.setItem(tokenKey, els.inToken.value.trim())
+            setStatus("token kaydedildi", "ok")
+        }
+        document.getElementById("clearTokenBtn").onclick = () => {
+            localStorage.removeItem(tokenKey)
+            els.inToken.value = ""
+            setStatus("token silindi", "ok")
+        }
+
+        // publish
+        document.getElementById("publishBtn").onclick = async () => {
+            const title = els.inTitle.value.trim()
+            const header = els.inHeader.value.trim()
+            const body = els.inBody.value.trim()
+            const token = els.inToken.value.trim()
+            const label = (els.inLabel.value.trim() || DEFAULT_LABEL).trim()
+
+            if (!title || !header || !body) return setStatus("bos birakma kanka title header metin lazim", "err")
+            if (!token) return setStatus("token yoksa yazamazsin kanka", "err")
+
+            setStatus("yayinliyorum bekleme yok burda calisiyorum", "loading")
+
+            const fullBody =
+                `# ${header}
+
+${body}
+`
+
+            try {
+                const res = await fetch(`${apiBase}/issues`, {
+                    method: "POST",
+                    headers: {
+                        "Accept": "application/vnd.github+json",
+                        "Authorization": `Bearer ${token}`,
+                        "X-GitHub-Api-Version": "2022-11-28"
+                    },
+                    body: JSON.stringify({
+                        title,
+                        body: fullBody,
+                        labels: [label]
+                    })
+                })
+
+                const data = await res.json().catch(() => ({}))
+
+                if (!res.ok) {
+                    const msg = data && data.message ? data.message : "patladi"
+                    return setStatus(`patladi kanka ${escapeHtml(msg)} token yetkisi veya repo adi yanlis olabilir`, "err")
+                }
+
+                setStatus(`tamamdir issue acildi id ${data.number}`, "ok")
+                els.inTitle.value = ""
+                els.inHeader.value = ""
+                els.inBody.value = ""
+                closeModal()
+                location.hash = "#/blogs"
+                await route()
+            } catch (e) {
+                setStatus("network patladi kanka", "err")
+            }
+        }
+
+        function openModal() {
+            els.modalBack.style.display = "flex"
+            els.inLabel.value = els.inLabel.value || DEFAULT_LABEL
+            setStatus("", "")
+        }
+        function closeModal() {
+            els.modalBack.style.display = "none"
+        }
+        function setStatus(text, type) {
+            els.status.className = "small " + (type || "")
+            els.status.textContent = text || ""
+        }
+
+        // router
+        window.addEventListener("hashchange", route)
+        route()
+
+        async function route() {
+            const h = location.hash || "#/"
+            const [path, query] = h.replace("#", "").split("?")
+            const params = new URLSearchParams(query || "")
+
+            if (path === "/") return renderHome()
+            if (path === "/blogs") return renderBlogs()
+            if (path === "/post") return renderPost(params.get("id"))
+            // fallback
+            location.hash = "#/"
+        }
+
+        // github fetch helpers
+        async function ghGet(url) {
+            const res = await fetch(url)
+            if (!res.ok) {
+                const t = await res.text().catch(() => "")
+                throw new Error(t || "request failed")
+            }
+            return res.json()
+        }
+
+        function card(html, extraClass = "") {
+            return `<div class="card ${extraClass}">${html}</div>`
+        }
+
+        function fmtDate(iso) {
+            try { return new Date(iso).toLocaleDateString("tr-TR", { year: "numeric", month: "long", day: "numeric" }) }
+            catch { return iso }
+        }
+
+        async function renderHome() {
+            els.pageTitle.textContent = "anasayfa"
+            els.pageDesc.textContent = "son yazilar burada bloglar sekmesinde hepsi var"
+            els.content.innerHTML = card(`<div class="loading">yukleniyo</div>`)
+
+            try {
+                const label = DEFAULT_LABEL
+                const issues = await ghGet(`${apiBase}/issues?labels=${encodeURIComponent(label)}&state=open&per_page=6&sort=created&direction=desc`)
+                const list = issues.map(i => {
+                    return `
+          <a href="#/post?id=${i.number}">
+            <div class="item">
+              <div class="title">${escapeHtml(i.title)}</div>
+              <div class="meta">${fmtDate(i.created_at)}  issue ${i.number}</div>
+            </div>
+          </a>
+        `
+                }).join("")
+
+                els.content.innerHTML = `
+        ${card(`
+          <div class="h1">son 6 yazi</div>
+          <div class="p">etiket: ${escapeHtml(label)}</div>
+          <div class="list">${list || `<div class="small">hic yazi yok kanka modal ac yaz bi sey</div>`}</div>
+        `, "half")}
+        ${card(`
+          <div class="h1">nasil calisiyo</div>
+          <div class="p">blog ekle modalindan issue aciyoruz okuyucu tarafi tokensiz issue apiden cekiyor postlar tek sayfada render oluyor</div>
+          <div class="hr"></div>
+          <div class="small">
+            owner repo dogru degilse hic bir sey gelmez<br>
+            token permission issues read write olmali<br>
+            repo public olursa okuma sorunsuz
+          </div>
+        `, "half")}
+      `
+            } catch (e) {
+                els.content.innerHTML = card(`
+        <div class="h1">patladi</div>
+        <div class="p">muhtemelen owner repo ayari yanlis ya da repo private</div>
+        <div class="small">hata: ${escapeHtml(String(e.message || e))}</div>
+      `)
+            }
+        }
+
+        async function renderBlogs() {
+            els.pageTitle.textContent = "bloglar"
+            els.pageDesc.textContent = "tum yazilar burada listelenir"
+            els.content.innerHTML = card(`<div class="loading">yukleniyo</div>`)
+
+            try {
+                const label = DEFAULT_LABEL
+                const issues = await ghGet(`${apiBase}/issues?labels=${encodeURIComponent(label)}&state=open&per_page=50&sort=created&direction=desc`)
+
+                const list = issues.map(i => {
+                    const excerpt = (i.body || "").split("\n").slice(0, 3).join(" ").slice(0, 140)
+                    return `
+          <a href="#/post?id=${i.number}">
+            <div class="item">
+              <div class="title">${escapeHtml(i.title)}</div>
+              <div class="meta">${fmtDate(i.created_at)}  issue ${i.number}</div>
+              <div class="small" style="margin-top:6px">${escapeHtml(excerpt)}${excerpt.length >= 140 ? "..." : ""}</div>
+            </div>
+          </a>
+        `
+                }).join("")
+
+                els.content.innerHTML = card(`
+        <div class="h1">liste</div>
+        <div class="p">etiket: ${escapeHtml(label)}  toplam: ${issues.length}</div>
+        <div class="list">${list || `<div class="small">bos kanka</div>`}</div>
+      `)
+            } catch (e) {
+                els.content.innerHTML = card(`
+        <div class="h1">cekemedim</div>
+        <div class="p">owner repo yanlis ya da repo private olabilir</div>
+        <div class="small">hata: ${escapeHtml(String(e.message || e))}</div>
+      `)
+            }
+        }
+
+        async function renderPost(id) {
+            els.pageTitle.textContent = "yazi"
+            els.pageDesc.textContent = "tekil yazi gorunumu"
+            if (!id) {
+                els.content.innerHTML = card(`<div class="small">id yok kanka listeye don</div>`)
+                return
+            }
+            els.content.innerHTML = card(`<div class="loading">yukleniyo</div>`)
+
+            try {
+                const issue = await ghGet(`${apiBase}/issues/${id}`)
+
+                const body = issue.body || ""
+                const safe = escapeHtml(body)
+
+                els.content.innerHTML = card(`
+        <div class="h1">${escapeHtml(issue.title)}</div>
+        <div class="meta">${fmtDate(issue.created_at)}  issue ${issue.number}</div>
+        <div class="hr"></div>
+        <pre>${safe}</pre>
+        <div class="hr"></div>
+        <div class="row">
+          <button class="btn" onclick="location.hash='#/blogs'">listeye don</button>
+          <a class="btn" href="${issue.html_url}" target="_blank" rel="noreferrer">githubda ac</a>
+        </div>
+        <div class="small" style="margin-top:10px">
+          not markdown render yok su an duz metin basiyorum istersen marked ekleriz ama tek dosyada bile yaparim
+        </div>
+      `)
+            } catch (e) {
+                els.content.innerHTML = card(`
+        <div class="h1">bulamadim</div>
+        <div class="p">bu id yok ya da repo private</div>
+        <div class="small">hata: ${escapeHtml(String(e.message || e))}</div>
+      `)
+            }
+        }
+
+        function escapeHtml(s) {
+            return String(s)
+                .replaceAll("&", "&amp;")
+                .replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;")
+                .replaceAll('"', "&quot;")
+                .replaceAll("'", "&#039;")
+        }
+    </script>
+</body>
+
+</html>
