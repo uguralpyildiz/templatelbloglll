@@ -491,7 +491,7 @@ ${body}
 
             try {
                 const label = DEFAULT_LABEL
-                const issues = await ghGet(`${apiBase}/issues?labels=${encodeURIComponent(label)}&state=open&per_page=6&sort=created&direction=desc`)
+                const issues = await ghGet(`${apiBase}/issues?labels=${encodeURIComponent(label)}&state=all&per_page=6&sort=created&direction=desc`)
                 const list = issues.map(i => {
                     return `
           <a href="#/post?id=${i.number}">
@@ -536,7 +536,7 @@ ${body}
 
             try {
                 const label = DEFAULT_LABEL
-                const issues = await ghGet(`${apiBase}/issues?labels=${encodeURIComponent(label)}&state=open&per_page=50&sort=created&direction=desc`)
+                const issues = await ghGet(`${apiBase}/issues?labels=${encodeURIComponent(label)}&state=all&per_page=50&sort=created&direction=desc`)
 
                 const list = issues.map(i => {
                     const excerpt = (i.body || "").split("\n").slice(0, 3).join(" ").slice(0, 140)
@@ -616,3 +616,4 @@ ${body}
 
 
 </html>
+
